@@ -309,6 +309,7 @@ import { motion } from 'framer-motion';
 import { Plus, Trash2, ShoppingCart } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const url = import.meta.env.VITE_API_URL;
 
 export default function App() {
   const [cart, setCart] = useState([]);
@@ -318,13 +319,13 @@ export default function App() {
   const [showCart, setShowCart] = useState(false);
 
   const fetchCart = async () => {
-    const res = await fetch('http://localhost:5000/cart');
+    const res = await fetch(`${url}/cart`);
     const data = await res.json();
     setCart(data);
   };
 
   const fetchTotal = async () => {
-    const res = await fetch('http://localhost:5000/cart/total');
+    const res = await fetch(`${url}/cart/total`);
     const { total } = await res.json();
     setTotal(total);
   };
@@ -338,7 +339,7 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch('http://localhost:5000/cart/add', {
+      await fetch(`${url}/cart/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -361,7 +362,7 @@ export default function App() {
   const handleRemove = async id => {
     setLoading(true);
     try {
-      await fetch(`http://localhost:5000/cart/remove/${id}`, { method: 'DELETE' });
+      await fetch(`${url}/cart/remove/${id}`, { method: 'DELETE' });
       await fetchCart();
       await fetchTotal();
       toast.info('Item removed.');
