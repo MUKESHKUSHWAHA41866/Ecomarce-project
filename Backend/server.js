@@ -23,6 +23,9 @@ const cartItemSchema = new mongoose.Schema({
 });
 const CartItem = mongoose.model('CartItem', cartItemSchema);
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the Homepage!');
+  });
 // Routes
 // Add a product to cart
 app.post('/cart/add', async (req, res) => {
